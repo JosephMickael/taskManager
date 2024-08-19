@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ticket index
+{% endblock %}
+
+{% block body %}
+	<h1>Tickets</h1>
+
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Titre</th>
+				<th>Créer le</th>
+				<th>Statut</th>
+				<th>Projet concerné</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{# filtre #}
+			<div class="row mb-5 mt-5">
+				{{ form_start(form1) }}
+				<div class="col-md-4">
+					{{ form_row(form1.filter) }}
+				</div>
+				<div class="col-md-4">
+					{{ form_row(form1.submit) }}
+				</div>
+				{{ form_end(form1) }}
+			</div>
+
+			{% for ticket in tickets %}
+				<tr>
+					<td>
+						{{ ticket.titre }}
+					</td>
+					<td>
+						{{ ticket.createdAt ? ticket.createdAt|date('H:i d/m/y') : '' }}
+					</td>
+					<td>
+						{{ ticket.etat }}
+					</td>
+					{% if ticket.projet != null %}
+						<td>
+							{{ ticket.projet.nom }}
+						</td>
+					{% else %}
+						<td></td>
+					{% endif %}
+					<td>
+						{% if is_granted('ROLE_MANAGER') %}
+							<a href="{{ path('app_ticket_show', {'id': ticket.id}) }}" class="btn btn-light">Voir</a>
+
+							{% if ticket.tache is null %}
+								<a href="{{ path('app_ticket_taches', {'id': ticket.id}) }}" class="btn btn-secondary">Créer une tache</a>
+							{% endif %}
+
+							{% if ticket.tache is not null %}
+								<a href="{{ path('app_tache_show', {'id': ticket.tache.id}) }}" class="btn btn-info">Voir la tache</a>
+							{% endif %}
+						{% endif %}
+
+						{% if is_granted('ROLE_PORTEUR_PROJET') %}
+							<a href="{{ path('app_ticket_edit', {'id': ticket.id}) }}" class="btn btn-secondary">Modifier</a>
+						{% endif %}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">Aucun ticket</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% if is_granted('ROLE_PORTEUR_PROJET') %}
+		<a href="{{ path('app_ticket_new') }}" class="btn btn-primary mb-3">Creer un nouveau ticket</a>
+	{% endif %}
+{% endblock %}

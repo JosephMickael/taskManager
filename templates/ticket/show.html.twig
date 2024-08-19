@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ticket
+{% endblock %}
+
+{% block body %}
+	<h1>Ticket</h1>
+
+	<table class="table">
+		<tbody>
+			{# <tr>
+							<th>Id</th>
+							<td>{{ ticket.id }}</td>
+						</tr> #}
+			<tr>
+				<th>Porteur de projet</th>
+				<td>{{ ticket.porteur.username }}</td>
+			</tr>
+			<tr>
+				<th>Projet concerné</th>
+				<td>{{ ticket.projet.nom }}</td>
+			</tr>
+			<tr>
+				<th>Titre</th>
+				<td>{{ ticket.titre }}</td>
+			</tr>
+			<tr>
+				<th>Créer le</th>
+				<td>{{ ticket.createdAt ? ticket.createdAt|date('H:i d/m/Y') : '' }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_ticket_index') }}" class="btn btn-light">Revenir à la liste</a>
+
+	{% if is_granted('ROLE_PORTEUR_PROJET') %}
+		<a href="{{ path('app_ticket_edit', {'id': ticket.id}) }}" class="btn btn-secondary">Modifier</a>
+	{% endif %}
+
+	{{ include('ticket/_delete_form.html.twig') }}
+{% endblock %}

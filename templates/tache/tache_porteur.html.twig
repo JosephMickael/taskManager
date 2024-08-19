@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projets
+{% endblock %}
+
+{% block body %}
+	<h1>Projets</h1>
+
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Nom du projet</th>
+				<th>Chef de projet</th>
+				<th>Porteur de projet</th>
+				{% if not is_granted('ROLE_DEV') %}
+					<th>actions</th>
+				{% endif %}
+			</tr>
+		</thead>
+		<tbody>
+			{% for projet in projets %}
+				<tr>
+					<td>{{ projet.nom }}</td>
+					<td>{{ projet.chefprojet.username }}</td>
+					<td>{{ projet.porteur.username }}</td>
+					{% if not is_granted('ROLE_DEV') %}
+						<td class="d-flex justify-content-around">
+							<a href="{{ path('app_projet_show', {'id': projet.id}) }}" class="fs-4 bi-eye" style="color: black"></a>
+							<a href="{{ path('app_projet_edit', {'id': projet.id}) }}" class="fs-4 bi-pen" style="color: orange"></a>
+						</td>
+					{% endif %}
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="2">Aucun</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	{% if not is_granted('ROLE_DEV') %}
+		<a href="{{ path('app_projet_new') }}" class="btn btn-primary">Creer nouveau</a>
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tache index
+{% endblock %}
+
+{% block body %}
+	{# filtre par statut #}
+	<div class="row mb-5 mt-2">
+		{{ form_start(formStatut) }}
+		<div class="col-md-4">
+			{{ form_row(formStatut.statut) }}
+		</div>
+		<div class="col-md-4">
+			{{ form_row(formStatut.submit) }}
+		</div>
+		{{ form_end(formStatut) }}
+	</div>
+
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Ref</th>
+				<th>Nom</th>
+				<th>statut</th>
+				<th>Developpeur</th>
+				<th>Date échéance développeur</th>
+				<th>Date terminer</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for tache in taches %}
+				<tr>
+					<td>TCH{{ tache.id }}</td>
+					<td>{{ tache.nom }}</td>
+					<td>{{ tache.statut.etat }}</td>
+					<td>{{ tache.developpeur.username }}</td>
+					<td>{{ tache.dateEchUser ? tache.dateEchUser|date('H:i d/m/Y') : '' }}</td>
+					<td>{{ tache.dateTerminer ? tache.dateTerminer|date('H:i d/m/Y') : '' }}</td>
+					<td>
+						<a href="{{ path('app_tache_show', {'id': tache.id}) }}" class="btn btn-light mb-2">Afficher</a>
+
+						{% if tache.statut.etat != "Terminé" %}
+							<a href="{{ path('tache_terminer', {'id': tache.id}) }}" class="btn btn-secondary">Terminer la tache</a>
+						{% endif %}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="8">Aucun</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

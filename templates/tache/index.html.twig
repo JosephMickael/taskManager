@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tache index
+{% endblock %}
+
+{% block body %}
+
+	{% for key, messages in app.flashes() %}
+		{% for message in messages %}
+			<div class="alert alert-danger">
+				{{ message }}
+			</div>
+		{% endfor %}
+	{% endfor %}
+
+	<h1 class="mb-4">Liste de toutes les taches</h1>
+
+	{# recherche par utilisateur #}
+	<div class="row">
+		{% if not is_granted('ROLE_PORTEUR_PROJET') %}
+			<div class="col-4 mt-2 mb-3">
+				{{ form_start(form1) }}
+				<div class="form-row">
+					{{ form_row(form1.user) }}
+				</div>
+				{{ form_end(form1) }}
+			</div>
+		{% endif %}
+
+		{# Recherche par statut #}
+		<div class="col-4 mt-2 mb-3">
+			{{ form_start(form2) }}
+			<div class="form-row">
+				{{ form_row(form2.statut) }}
+			</div>
+			{{ form_end(form2) }}
+		</div>
+	</div>
+
+	<div class="d-flex justify-content-between">
+		{% if not is_granted('ROLE_PORTEUR_PROJET') %}
+			<div class="d-flex">
+				<a href="{{ path('app_tache_new') }}" class="btn btn-primary mb-3">Créer nouveau</a>
+			</div>
+		{% endif %}
+
+		<div class="mb-3">
+			{{ form_start(formLimite) }}
+			<div class="row">
+				<div class="col-md-9">
+					{{ form_row(formLimite.nombre) }}
+				</div>
+				<div class="col-md-3">
+					{{ form_row(formLimite.submit) }}
+				</div>
+			</div>
+			{{ form_end(formLimite) }}
+		</div>
+	</div>
+
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Ref</th>
+				<th>Nom</th>
+				<th>Catégorie</th>
+				<th>statut</th>
+				<th>Developpeur</th>
+				<th>Date échéance</th>
+				{% if not is_granted('ROLE_PORTEUR_PROJET') %}
+					<th>Date échéance développeur</th>
+				{% endif %}
+				<th>Durée</th>
+
+				{% if not is_granted('ROLE_PORTEUR_PROJET') %}
+					<th>actions</th>
+				{% endif %}
+			</tr>
+		</thead>
+		<tbody>
+			{% for tache in taches %}
+				{% if tache.statut.etat == "En cours" %}
+					{% include 'tache/ligne_tache.html.twig' with {'class': 'table-warning'}  %}
+				{% elseif tache.statut.etat == "Terminé" %}
+					{% include 'tache/ligne_tache.html.twig' with {'class': 'table-success'}   %}
+				{% elseif tache.statut.etat == "Démarré" %}
+					{% include 'tache/ligne_tache.html.twig' with {'class': 'table-info'}  %}
+				{% else %}
+					{% include 'tache/ligne_tache.html.twig' with {'class': 'table-danger'}  %}
+				{% endif %}
+			{% else %}
+				<tr>
+					<td colspan="8">Aucun</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	{# PAGINATION #}
+	{% if pagination_links|length > 1%}
+		<nav aria-label="Page navigation d-flex justify-content-end">
+			<ul class="pagination">
+
+				{# Precedent #}
+				{# {% if current_page > 1 %}
+																													{% set prev_link = pagination_links[current_page-2] ?? null %}
+																													{% if prev_link is not null %}
+																														<li class="page-item">
+																															<a class="page-link" href="{{ prev_link.url }}" tabindex="-1" aria-label="Précédent">
+																																<span aria-hidden="true">&laquo;</span>
+																																<span class="sr-only">Précédent</span>
+																															</a>
+																														</li>
+																													{% endif %}
+																												{% endif %} #}
+
+				{# liens #}
+					{% for link in pagination_links %}
+						<li class="page-item{% if link.active %} active{% endif %}"> <a class="page-link" href="{{ link.url }}">{{ link.label }}</a>
+					</li>
+				{% endfor %}
+
+				{# Suivant #}
+				{# {% if current_page < pagination_links|length %}
+																													<li class="page-item">
+																														<a class="page-link" href="{{ pagination_links[current_page].url|default(pagination_links[1].url) }}" aria-label="Suivant">
+																															<span aria-hidden="true">&raquo;</span>
+																															<span class="sr-only">Suivant</span>
+																														</a>
+																													</li>
+																												{% endif %} #}
+			</ul>
+		</nav>
+	{% endif %}
+	{# END PAGINATION #}
+
+{% endblock %}

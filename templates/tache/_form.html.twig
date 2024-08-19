@@ -1,0 +1,49 @@
+<div class="mt-4">
+	{{ form_start(form) }}
+	<div class="row mb-3">
+		<div class="col-8">
+			{{ form_row(form.nom) }}
+		</div>
+	</div>
+
+	<div class="row mb-3">
+		<div class="col-4">
+			{{ form_row(form.dateEchUser) }}
+		</div>
+		<div class="col-4">
+			{{ form_row(form.dateEchChef) }}
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col-4">
+			{{ form_row(form.projet) }}
+		</div>
+		<div class="col-4">
+			{{ form_row(form.statut) }}
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col-8">
+			{{ form_row(form.categorie) }}
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col-4">
+			{{ form_row(form.developpeur) }}
+		</div>
+		<div class="col-4">
+			{{ form_row(form.duration) }}
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col-8">
+			{{ form_row(form.description) }}
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col">
+			<button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+		</div>
+	</div>
+	{{ form_end(form) }}
+</div>

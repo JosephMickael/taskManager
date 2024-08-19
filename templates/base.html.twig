@@ -1,19 +1,204 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		<script src="{{ asset('js/datepicker/bootstrap-datepicker.min.js') }}"></script>
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
-</html>
+		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		{% block stylesheets %}
+			{# <link rel="stylesheet" href="{{ asset('css/app.css') }}"> #}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+
+	</head>
+	<body>
+		{% if app.user %}
+			<div class="row">
+				<div id="demo" class="collapse in width">
+					<div style="padding: 0; overflow: hidden; ">
+						<div class="d-parent col-auto col-md-3 col-xl-2 px-sm-2 px-0">
+							<div class="sidebar d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 text-black">
+								<div class="d-logo ml-0 container bg-transparent">
+									<a class="navbar-brand" href="#">
+										<img src="{{ asset('images/logo-project.png') }}" style="margin-left: -15px" height="70" loading="lazy" id="logo" alt="Example Image">
+									</a>
+								</div>
+								<!-- Separateur -->
+								<div class="separator"></div>
+								<ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+									<li class="nav-item">
+										<div class="d-li">
+											<a href="{{ path('app_tache_index') }}" class="nav-link align-middle px-0 text-light">
+												<i class="fs-4 bi-house-fill"></i>
+												<span class="ms-2 d-none d-sm-inline">Taches</span>
+											</a>
+										</div>
+									</li>
+
+									{% if is_granted('ROLE_MANAGER') or is_granted('ROLE_SUPER_ADMIN') %}
+										<li class="nav-item">
+											<div class="d-li">
+												<a href="{{ path('app_statut_index') }}" class="nav-link align-middle px-0 text-light">
+													<i class="fs-4 bi-check2-circle"></i>
+													<span class="ms-2 d-none d-sm-inline">Statut</span>
+												</a>
+											</div>
+										</li>
+									{% endif %}
+
+									{% if is_granted('ROLE_PORTEUR_PROJET') %}
+										<li class="nav-item">
+											<div class="d-li">
+												<a href="{{ path('projet_liste') }}" class="nav-link align-middle px-0 text-light">
+													<i class="fs-4 bi-kanban"></i>
+													<span class="ms-2 d-none d-sm-inline">Mes projets</span>
+												</a>
+											</div>
+										</li>
+									{% endif %}
+
+									{% if is_granted('ROLE_DEV') %}
+										<li class="nav-item">
+											<div class="d-li">
+												<a href="{{ path('tache_liste') }}" class="nav-link align-middle px-0 text-light">
+													<i class="fs-4 bi-list-check"></i>
+													<span class="ms-2 d-none d-sm-inline">Mes taches</span>
+												</a>
+											</div>
+										</li>
+									{% endif %}
+
+									{% if not is_granted('ROLE_PORTEUR_PROJET') %}
+										<li class="nav-item">
+											<div class="d-li">
+												<a href="{{ path('app_projet_index') }}" class="nav-link align-middle px-0 text-light">
+													<i class="fs-4 bi-lamp"></i>
+													<span class="ms-2 d-none d-sm-inline">Projets</span>
+												</a>
+											</div>
+										</li>
+									{% endif %}
+
+									{% if is_granted('ROLE_MANAGER') or is_granted('ROLE_SUPER_ADMIN') %}
+										<li class="nav-item">
+											<div class="d-li">
+												<a href="{{ path('app_categorie_index') }}" class="nav-link align-middle px-0 text-light">
+													<i class="fs-4 bi-grid"></i>
+													<span class="ms-2 d-none d-sm-inline">Categories</span>
+												</a>
+											</div>
+										</li>
+									{% endif %}
+
+									{% if is_granted('ROLE_MANAGER') or is_granted('ROLE_PORTEUR_PROJET') or is_granted('ROLE_SUPER_ADMIN') %}
+										<li class="nav-item">
+											<div class="d-li">
+												<a href="{{ path('app_ticket_index') }}" class="nav-link align-middle px-0 text-light">
+													<i class="fs-4 bi-backspace-reverse"></i>
+													<span class="ms-2 d-none d-sm-inline">Tickets</span>
+												</a>
+											</div>
+										</li>
+									{% endif %}
+
+								</ul>
+								<hr>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="content col">
+					<nav class="navbar navbar-dark bg-dark mb-5">
+						<div class="container-fluid">
+							<span class="listIcon ms-1">
+								<button
+									type="button" class="btn btn-sm" data-toggle="toggle" data-target="#demo">{# <span class="navbar-toggler-icon"></span> #}
+								</button>
+								<a class="logo navbar-brand text-white ms-2"></a>
+							</span>
+							<div class="items">
+								<ul class="nav ml-auto">
+									{% if is_granted('ROLE_MANAGER') and not is_granted('ROLE_SUPER_ADMIN') %}
+										<li class="nav-item d-flex flex-nowrap">
+											<a href="{{ path('app_notification_index') }}" class="position-relative nav-link d-block me-4" style="margin-top: -8px;">
+												<i class="fs-4 bi-app-indicator me-2"></i>
+												Notifications
+												<span style="top: 21px;" class="badge badge-notification bg-danger position-absolute ms-1" id="count-taches-non-vues" data-count-url="{{ path('count_taches_non_vues') }}"></span>
+											</a>
+										</li>
+									{% endif %}
+									{# Dropdown (se deconnecter et informations) #}
+									<li class="nav-item">
+										<div
+											class="dropdown">
+											{# <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle"> #}
+											<i class="fs-4 bi-person-circle" style="color: white"></i>
+											<button class="btn btn-secondary bg-transparent border-0 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 14px;">
+												{{ app.user.username }}
+											</button>
+											<ul class="dropdown-menu bg-dark text-white-50" aria-labelledby="dropdownMenuButton1">
+												<li>
+													<a class="dropdown-item" href="#">Informations</a>
+												</li>
+												<hr>
+												<li>
+													<a href="{{ path('app_logout') }}" class="dropdown-item">Se deconnecter</a>
+												</li>
+											</ul>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</nav>
+					<div class="row flex-nowrap ">
+						<div class="col-12"> {% block body %}{% endblock %}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+				{% if is_granted('ROLE_MANAGER') %}
+					<script>
+						function updateCountTachesNonVues() {
+							$.getJSON('{{ path('count_taches_non_vues') }}', function (data) {
+							const count = data.count;
+							const element = $('#count-taches-non-vues');
+
+								if (count === 0) {
+									element.text('');
+								} else {
+									element.text(count); // nombre de taches pas encore vu
+								}
+							});
+						}
+
+						// Lancer la requête AJAX lorsque la page est chargée
+						$(document).ready(function () {
+								updateCountTachesNonVues();
+								// mettre à jour tous les 1 heure après le chargment de la page (360000ms => 1 heure)
+								setTimeout(function() {
+									setInterval(updateCountTachesNonVues, 3600000); 
+								}, 0);
+						});
+					</script>
+				{% endif %}
+
+			{% endif %}
+		</body>
+	</html>
+</body></html></body></html>

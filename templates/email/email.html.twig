@@ -1,0 +1,31 @@
+{% block body %}
+	<div style="text-align: center; background-color: #a314db; padding-top: 4px; padding-bottom: 4px; border-radius: 5px;">
+		<h1 style="font-size: 24px; color: white;">Tâche terminée!</h1>
+	</div>
+
+	<p>Bonjour
+		{{ managerUsername }},</p>
+
+	<div style="background-color: #f7f7f7; padding: 20px; border-radius: 5px;">
+		<p style="font-size: 18px; margin-bottom: 20px;">La tâche
+			<strong>"{{ tache.nom }}"</strong>
+			a été terminée :</p>
+
+		<ul style="list-style: none; margin-left: 0; padding-left: 0;">
+			<li style="margin-bottom: 10px;">
+				<strong style="display: inline-block; width: 200px;">Nom du projet :</strong>
+				{{ projet.nom }}
+			</li>
+			<li style="margin-bottom: 10px;">
+				<strong style="display: inline-block; width: 200px;">Description de la tâche :</strong>
+				{{ tache.description }}
+			</li>
+			<li>
+				<strong style="display: inline-block; width: 200px;">Date à laquelle le développeur a terminé la tâche :</strong>
+				{{ tache.dateterminer|date('d/m/Y') }}
+			</li>
+		</ul>
+	</div>
+
+	<p>Merci,</p>
+{% endblock %}

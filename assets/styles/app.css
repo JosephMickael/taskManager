@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+*, ::after, ::before {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body{
+  overflow: hidden;
+  overflow-y: scroll;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* SIDEBAR */
+#demo.in {
+  width: 250px;
+}
+
+#demo {
+  width: 0;
+  background-color: #a314db;
+  display: inline-block;
+  white-space: nowrap;
+  position: relative;
+  box-shadow: 0px 0px 30px rgba(67, 66, 66, 0.844);
+}
+/* End SIDEBAR */
+
+.navbar {   
+  margin-left: -12px;
+  box-shadow: 5px 0px 30px rgba(67, 66, 66, 0.844);
+}
+
+.content .row {
+  margin-left: 5px;
+  margin-right: 15px;
+}
+
+.separator {
+  position: absolute;
+  left: 0;
+  top: 80px;
+  width: 100%;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #c430ff;
+}
+
+.nav-item a {
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+  padding-left: 14px;
+  font-weight: 500;
+  display: block;
+  width: 100%;
+  border-left: 3px solid transparent;
+}
+
+.d-li a {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  margin-left: 10px;
+}
+
+.d-li a span {
+  display: flex;
+  margin-left: 15px;
+}
+
+.d-li {
+  display: block;
+  border-bottom: 1px solid #b316f1;
+  width: 180px;
+  position: relative;
+}
+
+.d-li:hover {
+  background-color: #9413c7;
+}
+
+#menu {
+  margin-top: 15px;
+}
+
+.d-logo {
+  margin-left: -20px;
+}
+
+.d-buttons a {
+  background-color: rgb(215, 67, 149);
+}
+
+.d-buttons a:hover {
+  background-color: #a314db;
+}
+
+.d-buttons a.active {
+  background-color: #a314db;
+}
+
+.content .logo {
+  position: absolute;
+  top: 8px;
+}

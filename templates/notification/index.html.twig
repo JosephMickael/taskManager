@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Notification index
+{% endblock %}
+
+{% block body %}
+	<h1>Vos notifications</h1>
+
+	{% if countTachesNonTermine > 0 %}
+		<p class="mt-4 mb-4">
+			Nombre de taches non terminées:
+			{{ countTachesNonTermine }}
+		</p>
+	{% else %}
+		<p>Toutes les taches sont terminés</p>
+	{% endif %}
+
+
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Nom du développeur</th>
+				<th>titre</th>
+				<th>statut</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for notification in notifications %}
+				<tr>
+					<td>{{ notification.user.username }}</td>
+					<td>{{ notification.titre }}</td>
+					<td>{{ notification.etat }}</td>
+					<td>
+						<a href="{{ path('app_notification_show', {'id': notification.id}) }}" class="fs-4 bi-eye ms-3" style="color: black"></a>
+						{# <a href="{{ path('app_notification_edit', {'id': notification.id}) }}">edit</a> #}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">Aucune notification</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{# <a href="{{ path('app_notification_new') }}">Create new</a> #}
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tache
+{% endblock %}
+
+{% block body %}
+	<h1>Tache</h1>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ tache.id }}</td>
+			</tr>
+			<tr>
+				<th>Nom</th>
+				<td>{{ tache.nom }}</td>
+			</tr>
+			<tr>
+				<th>Durée</th>
+				<td>{{ tache.duration }}</td>
+			</tr>
+			<tr>
+				<th>Date echeance developpeur</th>
+				<td>{{ tache.dateEchUser ? tache.dateEchUser|date('H:i d/m/Y') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Date echeance</th>
+				<td>{{ tache.dateEchChef ? tache.dateEchChef|date('H:i d/m/Y') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Date terminer</th>
+				<td>{{ tache.dateTerminer ? tache.dateTerminer|date('H:i d/m/Y') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td>{{ tache.description }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_tache_index') }}" class="btn btn-light">Revenir à la liste</a>
+
+	{% if not is_granted('ROLE_DEV') %}
+		<a href="{{ path('app_tache_edit', {'id': tache.id}) }}" class="btn btn-secondary">Modifier</a>
+	{% endif %}
+
+	{{ include('tache/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Notification
+{% endblock %}
+
+{% block body %}
+	<h1>Notification</h1>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Nom du projet</th>
+				<td>{{ projet.nom  }}</td>
+			</tr>
+			<tr>
+				<th>Nom de la tache</th>
+				<td>{{ nomTache }}</td>
+			</tr>
+			<tr>
+				<th>Nom du développeur qui a terminé la tache</th>
+				<td>{{ userTermine }}</td>
+			</tr>
+			<tr>
+				<th>Date auqel le développeur a terminé la tache</th>
+				<td>{{ dateTerminer|date('H:i d/m/Y') }}</td>
+			</tr>
+			<tr>
+				<th>Titre</th>
+				<td>{{ notification.titre }}</td>
+			</tr>
+			<tr>
+				<th>Statut</th>
+				<td>{{ notification.etat }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_notification_index') }}" class="btn btn-light">Revenir à la liste</a>
+
+	{# <a href="{{ path('app_notification_edit', {'id': notification.id}) }}">edit</a> #}
+
+	{{ include('notification/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorie index
+{% endblock %}
+
+{% block body %}
+	<h1>Categories</h1>
+
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Nom</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for categorie in categories %}
+				<tr>
+					<td>{{ categorie.nom }}</td>
+					<td class="d-flex gap-3">
+						<a href="{{ path('app_categorie_show', {'id': categorie.id}) }}" class="fs-4 bi-eye" style="color: black"></a>
+						<a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}" class="fs-4 bi-pen" style="color: orange"></a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="3">Aucun</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_categorie_new') }}" class="btn btn-primary">Creer une nouvelle catégorie</a>
+{% endblock %}

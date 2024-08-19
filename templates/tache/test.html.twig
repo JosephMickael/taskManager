@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tache index
+{% endblock %}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Ref</th>
+			<th>Nom</th>
+			<th>Catégorie</th>
+			<th>statut</th>
+			<th>Developpeur</th>
+			<th>Date échéance</th>
+			{% if not is_granted('ROLE_PORTEUR_PROJET') %}
+				<th>Date échéance développeur</th>
+			{% endif %}
+			<th>Durée</th>
+
+			{% if not is_granted('ROLE_PORTEUR_PROJET') %}
+				<th>actions</th>
+			{% endif %}
+		</tr>
+	</thead>
+	<tbody>
+		{% for tache in taches %}
+			{% if tache.statut.etat == "En cours" %}
+				{% include 'tache/ligne_tache.html.twig' with {'class': 'table-warning'}  %}
+			{% elseif tache.statut.etat == "Terminé" %}
+				{% include 'tache/ligne_tache.html.twig' with {'class': 'table-success'}   %}
+			{% elseif tache.statut.etat == "Démarré" %}
+				{% include 'tache/ligne_tache.html.twig' with {'class': 'table-info'}  %}
+			{% else %}
+				{% include 'tache/ligne_tache.html.twig' with {'class': 'table-danger'}  %}
+			{% endif %}
+		{% else %}
+			<tr>
+				<td colspan="8">Aucun</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+
+{% block body %}{% endblock %}

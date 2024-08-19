@@ -1,0 +1,27 @@
+<tr class={{ class }}>
+	<td>TCH{{ tache.id }}</td>
+	<td>{{ tache.nom }}</td>
+
+	{% if tache.categorie != null %}
+		<td>{{ tache.categorie.nom }}</td>
+	{% else %}
+		<td></td>
+	{% endif %}
+
+	<td>{{ tache.statut.etat }}</td>
+	<td>{{ tache.developpeur.username }}</td>
+	<td>{{ tache.dateEchChef ? tache.dateEchChef|date('H:i d/m/Y') : '' }}</td>
+
+	{% if not is_granted('ROLE_PORTEUR_PROJET') %}
+		<td>{{ tache.dateEchUser ? tache.dateEchUser|date('H:i d/m/Y') : '' }}</td>
+	{% endif %}
+
+	<td>{{ tache.duration }}</td>
+
+	{% if not is_granted('ROLE_PORTEUR_PROJET') %}
+		<td>
+			<a href="{{ path('app_tache_show', {'id': tache.id}) }}" class="fs-4 bi-eye" style="color: black"></a>
+			<a href="{{ path('app_tache_edit', {'id': tache.id}) }}" class="fs-4 bi-pen" style="color: orange"></a>
+		</td>
+	{% endif %}
+</tr>

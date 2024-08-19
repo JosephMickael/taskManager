@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projets
+{% endblock %}
+
+{% block body %}
+	<h1>Liste des projets</h1>
+
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Nom du projet</th>
+				<th>Chef de projet</th>
+				<th>Porteur de projet</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for projet in projets %}
+				<tr>
+					<td>{{ projet.nom }}</td>
+					<td>{{ projet.chefprojet.username }}</td>
+					<td>{{ projet.porteur.username }}</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="2">Aucun</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statut
+{% endblock %}
+
+{% block body %}
+	<h1>Statut</h1>
+
+	<table class="table table-bordered">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ statut.id }}</td>
+			</tr>
+			<tr>
+				<th>Etat</th>
+				<td>{{ statut.etat }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_statut_index') }}" class="btn btn-light me-3">Revenir à la liste</a>
+
+	<a href="{{ path('app_statut_edit', {'id': statut.id}) }}" class="btn btn-secondary">Modifier</a>
+
+	{{ include('statut/_delete_form.html.twig') }}
+{% endblock %}

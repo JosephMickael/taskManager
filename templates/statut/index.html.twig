@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statut index
+{% endblock %}
+
+{% block body %}
+	<h1>Liste des statuts</h1>
+
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Etat</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for statut in statuts %}
+				<tr>
+					<td>{{ statut.etat }}</td>
+					<td class="d-flex gap-3">
+						<a href="{{ path('app_statut_show', {'id': statut.id}) }}" class="fs-4 bi-eye" style="color: black"></a>
+						<a href="{{ path('app_statut_edit', {'id': statut.id}) }}" class="fs-4 bi-pen" style="color: orange"></a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="3">Aucun</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_statut_new') }}" class="btn btn-primary">Creer un statut</a>
+{% endblock %}
