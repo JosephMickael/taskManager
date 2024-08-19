@@ -4,41 +4,53 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Projets</h1>
+	{# <h1 class="mb-4">Projets</h1> #}
+	<p class="fs-3 mb-4" style="margin-top: -30px">Liste des
+		<b>Projets</b>
+	</p>
 
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th>Nom du projet</th>
-				<th>Chef de projet</th>
-				<th>Porteur de projet</th>
-				{% if not is_granted('ROLE_DEV') %}
-					<th>actions</th>
-				{% endif %}
-			</tr>
-		</thead>
-		<tbody>
-			{% for projet in projets %}
+	<div class="shadow-sm p-3 rounded-1">
+		{% if not is_granted('ROLE_DEV') %}
+			<a href="{{ path('app_projet_new') }}" class="btn btn-info mb-4 px-4" style="font-size: .9em">
+				<span>
+					<i class="bi bi-plus-circle position-relative" style="top: -3px"></i>
+					Nouveau projet
+				</span>
+			</a>
+		{% endif %}
+
+		<table class="table table-bordered table-striped align-middle bg-white" style="font-size: .9em">
+			<thead>
 				<tr>
-					<td>{{ projet.nom }}</td>
-					<td>{{ projet.chefprojet.username }}</td>
-					<td>{{ projet.porteur.username }}</td>
+					<th>Nom du projet</th>
+					<th>Chef de projet</th>
+					<th>Porteur de projet</th>
 					{% if not is_granted('ROLE_DEV') %}
-						<td>
-							<a href="{{ path('app_projet_show', {'id': projet.id}) }}" class="fs-4 bi-eye" style="color: black"></a>
-							<a href="{{ path('app_projet_edit', {'id': projet.id}) }}" class="fs-4 bi-pen" style="color: orange"></a>
-						</td>
+						<th class="d-flex justify-content-center">actions</th>
 					{% endif %}
 				</tr>
-			{% else %}
-				<tr>
-					<td colspan="2">Aucun</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-
-	{% if not is_granted('ROLE_DEV') %}
-		<a href="{{ path('app_projet_new') }}" class="btn btn-primary mb-4">Creer nouveau</a>
-	{% endif %}
+			</thead>
+			<tbody>
+				{% for projet in projets %}
+					<tr>
+						<td>{{ projet.nom }}</td>
+						<td>{{ projet.chefprojet.username }}</td>
+						<td>{{ projet.porteur.username }}</td>
+						{% if not is_granted('ROLE_DEV') %}
+							<td>
+								<div class="d-flex justify-content-center">
+									<a href="{{ path('app_projet_show', {'id': projet.id}) }}" class="fs-5 bi-eye me-4" title="Afficher" style="color: black"></a>
+									<a href="{{ path('app_projet_edit', {'id': projet.id}) }}" class="fs-5 bi-pencil-square" title="Modifier" style="color: orange"></a>
+								</div>
+							</td>
+						{% endif %}
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="2">Aucun</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 {% endblock %}

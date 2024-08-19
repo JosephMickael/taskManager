@@ -4,24 +4,36 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Statut</h1>
+	<p class="fs-3 mb-3 ms-2" style="margin-top: -30px">Afficher /
+		<b>Statut</b>
+	</p>
 
-	<table class="table table-bordered">
-		<tbody>
-			<tr>
-				<th>Id</th>
-				<td>{{ statut.id }}</td>
-			</tr>
-			<tr>
-				<th>Etat</th>
-				<td>{{ statut.etat }}</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="shadow-sm p-3 rounded-1">
+		<div class="table-responsive">
+			<table class="table">
+				<tbody>
+					<tr>
+						<th>Titre</th>
+						<td>{{ statut.etat }}</td>
+					</tr>
+				</tbody>
+			</table>
 
-	<a href="{{ path('app_statut_index') }}" class="btn btn-light me-3">Revenir à la liste</a>
+			<div class="d-flex">
+				<a href="{{ path('app_statut_edit', {'id': statut.id}) }}" class="btn btn-secondary px-4 me-3" title="Modifier" style="font-size: .9em">
+					<i class="bi bi-pencil-square position-relative" style="top: -3px"></i>
+					Modifier
+				</a>
 
-	<a href="{{ path('app_statut_edit', {'id': statut.id}) }}" class="btn btn-secondary">Modifier</a>
+				{{ include('statut/_delete_form.html.twig') }}
+			</div>
 
-	{{ include('statut/_delete_form.html.twig') }}
-{% endblock %}
+			<div class="mt-4">
+				<a href="{{ path('app_statut_index') }}" class="mt-4" style="font-size: .9em; text-decoration: none">
+					<i class="bi bi-arrow-left-circle position-relative" style="top: -3px"></i>
+					Revenir à la liste
+				</a>
+			</div>
+		</div>
+
+	{% endblock %}

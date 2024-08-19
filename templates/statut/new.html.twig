@@ -4,9 +4,18 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Creer un nouveau statut</h1>
+	<p class="fs-3 mb-4 ms-2" style="margin-top: -30px">Nouveau /
+		<b>Statut</b>
+	</p>
 
-	{{ include('statut/_form.html.twig') }}
+	<div class="mb-3 px-2">
+		{{ include('statut/_form.html.twig') }}
+	</div>
 
-	<a href="{{ path('app_statut_index') }}" class="btn btn-light">Revenir à la liste</a>
+	<a href="{{ path('app_statut_index') }}" class="position-relative" style="font-size: .9em; text-decoration: none; left: 10px">
+		<i class="bi bi-arrow-left-circle position-relative" style="top: -3px"></i>
+		Revenir à la liste
+	</a>
+
+
 {% endblock %}

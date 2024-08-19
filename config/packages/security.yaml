@@ -43,6 +43,7 @@ security:
          - { path: ^/tache, roles: [ROLE_PORTEUR_PROJET ,ROLE_MANAGER, ROLE_DEV, ROLE_SUPER_ADMIN] }
          - { path: ^/projet, roles: [ROLE_PORTEUR_PROJET ,ROLE_MANAGER, ROLE_DEV, ROLE_SUPER_ADMIN] }
          - { path: ^/notification, roles: [ROLE_MANAGER, ROLE_PORTEUR_PROJET, ROLE_DEV, ROLE_SUPER_ADMIN] }
+         - { path: ^/user, roles: [ROLE_MANAGER, ROLE_PORTEUR_PROJET, ROLE_DEV, ROLE_SUPER_ADMIN] }
          - { path: ^/ticket, roles: [ROLE_MANAGER, ROLE_PORTEUR_PROJET, ROLE_DEV, ROLE_SUPER_ADMIN] }
          - { path: ^/tache/liste, roles: [ROLE_DEV] }
         

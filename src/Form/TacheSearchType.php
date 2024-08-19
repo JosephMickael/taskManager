@@ -31,7 +31,10 @@ class TacheSearchType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Rechercher par utilisateurs',
-                'attr' => ['class' => 'btn btn-secondary mt-4 mb-3'],
+                'attr' => [
+                    'class' => 'btn btn-secondary mt-4 mb-3 px-4',
+                    'style' => 'font-size: .9em'
+                ],
             ]);
     }
 

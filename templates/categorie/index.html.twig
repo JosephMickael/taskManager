@@ -4,31 +4,42 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Categories</h1>
+	<p class="fs-3 mb-4" style="margin-top: -30px">Liste des
+		<b>Catégories</b>
+	</p>
 
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th>Nom</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for categorie in categories %}
-				<tr>
-					<td>{{ categorie.nom }}</td>
-					<td class="d-flex gap-3">
-						<a href="{{ path('app_categorie_show', {'id': categorie.id}) }}" class="fs-4 bi-eye" style="color: black"></a>
-						<a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}" class="fs-4 bi-pen" style="color: orange"></a>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="3">Aucun</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+	<div class="shadow-sm p-3 rounded-1">
+		<a href="{{ path('app_categorie_new') }}" class="btn btn-info mb-4 px-4" style="font-size: .9em">
+			<span>
+				<i class="bi bi-plus-circle position-relative" style="top: -3px"></i>
+				Nouvelle catégorie
+			</span>
+		</a>
 
-	<a href="{{ path('app_categorie_new') }}" class="btn btn-primary">Creer une nouvelle catégorie</a>
+		<table class="table table-bordered table-striped align-middle bg-white" style="font-size: .9em">
+			<thead class="">
+				<tr>
+					<th>Nom</th>
+					<th class="d-flex justify-content-center">actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for categorie in categories %}
+					<tr>
+						<td>{{ categorie.nom }}</td>
+						<td>
+							<div class="d-flex justify-content-center">
+								<a href="{{ path('app_categorie_show', {'id': categorie.id}) }}" class="fs-5 bi-eye me-4" style="color: black"></a>
+								<a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}" class="fs-5 bi-pencil-square" style="color: orange"></a>
+							</div>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="3">Aucun</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 {% endblock %}

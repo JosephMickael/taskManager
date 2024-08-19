@@ -1,34 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}User
+{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Username</th>
-                <td>{{ user.username }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-        </tbody>
-    </table>
+	{% if app.session.flashbag.has('success') %}
+		<div class="alert alert-success">
+			{% for message in app.flashes('success') %}
+				{{ message }}
+			{% endfor %}
+		</div>
+	{% endif %}
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
 
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+	<h1>{{ user.username }}</h1>
 
-    {{ include('user/_delete_form.html.twig') }}
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Username</th>
+				<td>{{ user.username }}</td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td>
+					{% if user.email != null %}
+						{{ user.email }}
+					{% else %}
+						Vide
+					{% endif %}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_user_show', {'id': app.user.id}) }}" class="btn btn-light">Revenir à mon profil</a>
+
+	<a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-primary">Modifier</a>
+
+	<a href="{{ path('change_password', {'id': user.id}) }}" class="btn btn-secondary">Modifier mon mot de passe</a>
+
+	{# {{ include('user/_delete_form.html.twig') }} #}
 {% endblock %}

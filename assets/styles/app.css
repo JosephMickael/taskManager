@@ -25,13 +25,13 @@ body{
   display: inline-block;
   white-space: nowrap;
   position: relative;
-  box-shadow: 0px 0px 30px rgba(67, 66, 66, 0.844);
+  /* box-shadow: 0px 0px 30px rgba(67, 66, 66, 0.844); */
 }
 /* End SIDEBAR */
 
 .navbar {   
   margin-left: -12px;
-  box-shadow: 5px 0px 30px rgba(67, 66, 66, 0.844);
+  /* box-shadow: 5px 0px 30px rgba(67, 66, 66, 0.844); */
 }
 
 .content .row {

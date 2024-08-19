@@ -4,11 +4,19 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Modifier le projet</h1>
+	<p class="fs-3 mb-3 ms-2" style="margin-top: -30px">Modifer /
+		<b>Projet</b>
+	</p>
 
 	{{ include('projet/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-	<a href="{{ path('app_projet_index') }}" class="btn btn-light">Revenir à la liste</a>
+	<a href="{{ path('app_projet_index') }}" class="position-relative" style="text-decoration: none; font-size: .9em; left: 16px">
+		<span>
+			<i class="bi bi-arrow-left-circle position-relative" style="top: -2px"></i>
+			Revenir à la liste
+		</span>
+	</a>
+
 
 	{# {{ include('projet/_delete_form.html.twig') }} #}
 {% endblock %}

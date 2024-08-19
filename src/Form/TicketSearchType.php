@@ -25,7 +25,7 @@ class TicketSearchType extends AbstractType
                 'label' => false
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Rechercher par statut',
+                'label' => 'Rechercher',
                 'attr' => ['class' => 'btn btn-secondary'],
             ]);
     }

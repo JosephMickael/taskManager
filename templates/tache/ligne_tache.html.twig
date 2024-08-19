@@ -20,8 +20,10 @@
 
 	{% if not is_granted('ROLE_PORTEUR_PROJET') %}
 		<td>
-			<a href="{{ path('app_tache_show', {'id': tache.id}) }}" class="fs-4 bi-eye" style="color: black"></a>
-			<a href="{{ path('app_tache_edit', {'id': tache.id}) }}" class="fs-4 bi-pen" style="color: orange"></a>
+			<div class="position-relative" style="top: -10px">
+				<a href="{{ path('app_tache_show', {'id': tache.id}) }}" title="Afficher" class="fs-5 bi-eye me-2" style="color: black"></a>
+				<a href="{{ path('app_tache_edit', {'id': tache.id}) }}" title="Modifier" class="fs-5 bi-pencil-square" style="color: orange"></a>
+			</div>
 		</td>
 	{% endif %}
 </tr>

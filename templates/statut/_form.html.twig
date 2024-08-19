@@ -1,14 +1,8 @@
-<div class="mt-4 mb-4">
-	{{ form_start(form) }}
-	<div class="row">
-		<div class="col-md-6 mb-3">
-			{{ form_row(form.etat) }}
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-6">
-			<button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
-		</div>
-	</div>
-	{{ form_end(form) }}
+{{ form_start(form) }}
+<div class="col-md-5 mb-3">
+	{{ form_row(form.etat) }}
 </div>
+<div class="col-md-5">
+	<button class="btn btn-primary px-4" style="font-size: .9em">{{ button_label|default('Enregistrer') }}</button>
+</div>
+{{ form_end(form) }}

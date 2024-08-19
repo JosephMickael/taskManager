@@ -4,38 +4,45 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Ticket</h1>
+	<p class="fs-3 mb-3" style="margin-top: -30px">Détails du
+		<b>Ticket</b>
+	</p>
 
-	<table class="table">
-		<tbody>
-			{# <tr>
-							<th>Id</th>
-							<td>{{ ticket.id }}</td>
-						</tr> #}
-			<tr>
-				<th>Porteur de projet</th>
-				<td>{{ ticket.porteur.username }}</td>
-			</tr>
-			<tr>
-				<th>Projet concerné</th>
-				<td>{{ ticket.projet.nom }}</td>
-			</tr>
-			<tr>
-				<th>Titre</th>
-				<td>{{ ticket.titre }}</td>
-			</tr>
-			<tr>
-				<th>Créer le</th>
-				<td>{{ ticket.createdAt ? ticket.createdAt|date('H:i d/m/Y') : '' }}</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="shadow-sm p-4">
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Titre</th>
+					<td>{{ ticket.titre }}</td>
+				</tr>
+				<tr>
+					<th>Porteur de projet</th>
+					<td>{{ ticket.porteur.username }}</td>
+				</tr>
+				<tr>
+					<th>Projet concerné</th>
+					<td>{{ ticket.projet.nom }}</td>
+				</tr>
+				<tr>
+					<th>Créer le</th>
+					<td>{{ ticket.createdAt ? ticket.createdAt|date('H:i d/m/Y') : '' }}</td>
+				</tr>
+			</tbody>
+		</table>
 
-	<a href="{{ path('app_ticket_index') }}" class="btn btn-light">Revenir à la liste</a>
+		{{ include('ticket/_delete_form.html.twig') }}
 
-	{% if is_granted('ROLE_PORTEUR_PROJET') %}
-		<a href="{{ path('app_ticket_edit', {'id': ticket.id}) }}" class="btn btn-secondary">Modifier</a>
-	{% endif %}
+		<a href="{{ path('app_ticket_index') }}" class="position-relative" style="text-decoration: none; left: 2px; font-size: .9em">
+			<span>
+				<i class="bi bi-arrow-left-circle position-relative" style="top: -2px"></i>
+				Revenir à la liste
+			</span>
+		</a>
 
-	{{ include('ticket/_delete_form.html.twig') }}
+		{% if is_granted('ROLE_PORTEUR_PROJET') %}
+			<a href="{{ path('app_ticket_edit', {'id': ticket.id}) }}" class="btn btn-secondary">Modifier</a>
+		{% endif %}
+
+	</div>
+
 {% endblock %}

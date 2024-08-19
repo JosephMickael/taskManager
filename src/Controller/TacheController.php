@@ -69,7 +69,7 @@ class TacheController extends AbstractController
         $filterByStatut = $request->query->get('statut');
         $pageNumber = $request->query->get('page');
 
-        $limit = 20;
+        $limit = 10;
 
         if ($formLimite->isSubmitted() && $formLimite->isValid()) {
             $limit = $formLimite->get('nombre')->getData();
@@ -96,7 +96,7 @@ class TacheController extends AbstractController
                 $taches = $tacheRepository->filterTasksByDev($name, $username, $usernameFilter)->getQuery()->getResult();
 
                 if ($limitUrl <= 0) {
-                    $limitUrl = 20;
+                    $limitUrl = 5;
                 }
 
                 if ($limitUrl) {
@@ -126,7 +126,7 @@ class TacheController extends AbstractController
                 $limitUrl = $request->query->get('limit');
 
                 if ($limitUrl <= 0) {
-                    $limitUrl = 20;
+                    $limitUrl = 5;
                 }
 
                 if ($limitUrl) {
@@ -162,7 +162,7 @@ class TacheController extends AbstractController
                 $limitUrl = $request->query->get('limit');
 
                 if ($limitUrl <= 0) {
-                    $limitUrl = 20;
+                    $limitUrl = 5;
                 }
 
                 if ($limitUrl) {
@@ -214,7 +214,7 @@ class TacheController extends AbstractController
                 $pageNumber = $request->query->getInt('page', 1);
 
                 if ($limitUrl <= 0) {
-                    $limitUrl = 20;
+                    $limitUrl = 5;
                 }
 
                 if ($limitUrl) {
@@ -272,7 +272,7 @@ class TacheController extends AbstractController
                 $limitUrl = $request->query->get('limit');
 
                 if ($limitUrl <= 0) {
-                    $limitUrl = 20;
+                    $limitUrl = 5;
                 }
 
                 if ($limitUrl) {
@@ -440,15 +440,6 @@ class TacheController extends AbstractController
 
         $user = $this->getUser();
 
-        // Notification
-        $notification->setTitre("Terminé");
-        $notification->setUser($user);
-        $notification->setEtat("pas encore vu");
-        $notification->setTache($tache);
-
-        $entityManager->persist($notification);
-        $entityManager->flush($notification);
-
         // Recherche l'email du Chef de Projet
         $manager = $tache->getProjet()->getChefprojet();
         $managerUsername = $manager->getUserIdentifier();
@@ -465,22 +456,38 @@ class TacheController extends AbstractController
             'managerUsername' => $managerUsername
         ]);
 
+        $userEmail = $user->getEmail();
+
         // n'envoie pas le mail si le chef de projet n'a pas de mail
         if ($managerEmail != null) {
             // Sending email
             $email = (new Email())
-                ->from('contact@planvacances.net')
+                ->from($userEmail)
+                // ->from('contact@planvacances.net')
+                // ->from('josephmickael03@gmail.com')
                 ->to($managerEmail)
                 ->subject('Tache terminé')
                 ->html($html);
 
             $mailer->send($email);
+        } else {
+            $this->addFlash('warning', "L'email n'a pas été pas envoyé");
         }
 
         // Date terminer pour tache et ajout nouvelle statut
         $tache->setStatut($newStatut);
         $tache->setDateterminer($date);
 
+        // Notification
+        $notification->setTitre("Terminé");
+        $notification->setUser($user);
+        $notification->setEtat("pas encore vu");
+        $notification->setTache($tache);
+
+        $entityManager->persist($notification);
+        $entityManager->flush($notification);
+
+        // Persist tache
         $entityManager->persist($tache);
         $entityManager->flush($tache);
 

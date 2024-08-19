@@ -83,7 +83,7 @@ class TicketController extends AbstractController
         $tabRoles = $this->getUser()->getRoles();
         $currentPorteur = $this->getUser();
 
-        if (in_array('ROLE_PORTEUR_PROJET', $tabRoles)) {
+        if (in_array('ROLE_PORTEUR_PROJET', $tabRoles) or in_array('ROLE_SUPER_ADMIN', $tabRoles)) {
             $ticket = new Ticket();
             $form = $this->createForm(TicketType::class, $ticket);
             $form->handleRequest($request);

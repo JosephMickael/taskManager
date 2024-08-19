@@ -40,7 +40,7 @@ class NotificationRepository extends ServiceEntityRepository
     }
 
     /**
-     * Affiche les taches concernant le manager
+     * Affiche les notifications concernant le manager
      */
     public function findByConnectedUser($username)
     {
@@ -61,6 +61,21 @@ class NotificationRepository extends ServiceEntityRepository
             ->where('n.etat = :etat')
             ->setParameter('etat', 'pas encore vu')
             ->orderBy('n.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByConnectedUserAndEtat($username)
+    {
+        return $this->createQueryBuilder('n')
+            ->join('n.tache', 't')
+            ->join('t.projet', 'p')
+            ->join('p.chefprojet', 'cp')
+            ->where('cp.username = :username')
+            ->andWhere('n.etat = :etat')
+            ->setParameter('username', $username)
+            ->setParameter('etat', 'pas encore vu')
+            ->orderBy('t.id', 'DESC')
             ->getQuery()
             ->getResult();
     }

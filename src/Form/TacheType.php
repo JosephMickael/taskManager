@@ -37,7 +37,7 @@ class TacheType extends AbstractType
         $builder
             ->add('nom', TextType::class, ["attr" => ["class" => "form-control"], 'label' => 'Tache'])
             ->add('description', TextareaType::class, [
-                "attr" => ["class" => "form-control"], 
+                "attr" => ["class" => "form-control"],
                 'label' => 'Description de la tache'
             ])
             ->add('developpeur', EntityType::class, [

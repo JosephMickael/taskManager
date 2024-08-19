@@ -13,16 +13,22 @@
 
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
-			{# <link rel="stylesheet" href="{{ asset('css/app.css') }}"> #}
+			<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
 
 		{% block javascripts %}
+			<script src="{{ asset('js/app.js') }}"></script>
+			<link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
+			<script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+			<script src="{{ asset('js/bootstrap-datepicker.fr.min.js') }}"></script>
+
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 
 	</head>
 	<body>
+		{# Si l'utilisateur est connecté #}
 		{% if app.user %}
 			<div class="row">
 				<div id="demo" class="collapse in width">
@@ -46,12 +52,12 @@
 										</div>
 									</li>
 
-									{% if is_granted('ROLE_MANAGER') or is_granted('ROLE_SUPER_ADMIN') %}
+									{% if not is_granted('ROLE_PORTEUR_PROJET') and not is_granted('ROLE_DEV') %}
 										<li class="nav-item">
 											<div class="d-li">
-												<a href="{{ path('app_statut_index') }}" class="nav-link align-middle px-0 text-light">
-													<i class="fs-4 bi-check2-circle"></i>
-													<span class="ms-2 d-none d-sm-inline">Statut</span>
+												<a href="{{ path('app_projet_index') }}" class="nav-link align-middle px-0 text-light">
+													<i class="fs-4 bi-lamp"></i>
+													<span class="ms-2 d-none d-sm-inline">Projets</span>
 												</a>
 											</div>
 										</li>
@@ -79,12 +85,12 @@
 										</li>
 									{% endif %}
 
-									{% if not is_granted('ROLE_PORTEUR_PROJET') %}
+									{% if is_granted('ROLE_MANAGER') or is_granted('ROLE_SUPER_ADMIN') %}
 										<li class="nav-item">
 											<div class="d-li">
-												<a href="{{ path('app_projet_index') }}" class="nav-link align-middle px-0 text-light">
-													<i class="fs-4 bi-lamp"></i>
-													<span class="ms-2 d-none d-sm-inline">Projets</span>
+												<a href="{{ path('app_categorie_index') }}" class="nav-link align-middle px-0 text-light">
+													<i class="fs-4 bi-grid"></i>
+													<span class="ms-2 d-none d-sm-inline">Categories</span>
 												</a>
 											</div>
 										</li>
@@ -93,9 +99,9 @@
 									{% if is_granted('ROLE_MANAGER') or is_granted('ROLE_SUPER_ADMIN') %}
 										<li class="nav-item">
 											<div class="d-li">
-												<a href="{{ path('app_categorie_index') }}" class="nav-link align-middle px-0 text-light">
-													<i class="fs-4 bi-grid"></i>
-													<span class="ms-2 d-none d-sm-inline">Categories</span>
+												<a href="{{ path('app_statut_index') }}" class="nav-link align-middle px-0 text-light">
+													<i class="fs-4 bi-check2-circle"></i>
+													<span class="ms-2 d-none d-sm-inline">Statut</span>
 												</a>
 											</div>
 										</li>
@@ -149,7 +155,7 @@
 											</button>
 											<ul class="dropdown-menu bg-dark text-white-50" aria-labelledby="dropdownMenuButton1">
 												<li>
-													<a class="dropdown-item" href="#">Informations</a>
+													<a class="dropdown-item" href="{{ path("app_user_show", {'id': app.user.id}) }}">Informations</a>
 												</li>
 												<hr>
 												<li>
@@ -162,43 +168,41 @@
 							</div>
 						</div>
 					</nav>
-					<div class="row flex-nowrap ">
+					<div class="row flex-nowrap">
 						<div class="col-12"> {% block body %}{% endblock %}
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-				<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+					<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-				{% if is_granted('ROLE_MANAGER') %}
-					<script>
-						function updateCountTachesNonVues() {
-							$.getJSON('{{ path('count_taches_non_vues') }}', function (data) {
-							const count = data.count;
-							const element = $('#count-taches-non-vues');
+					{% if is_granted('ROLE_MANAGER') %}
+						<script>
+							function updateCountTachesNonVues() {
+$.getJSON('{{ path('count_taches_non_vues') }}', function (data) {
+const count = data.count;
+const element = $('#count-taches-non-vues');
 
-								if (count === 0) {
-									element.text('');
-								} else {
-									element.text(count); // nombre de taches pas encore vu
-								}
-							});
-						}
+if (count === 0) {
+element.text('');
+} else {
+element.text(count); // nombre de taches pas encore vu
+}
+});
+}
 
-						// Lancer la requête AJAX lorsque la page est chargée
-						$(document).ready(function () {
-								updateCountTachesNonVues();
-								// mettre à jour tous les 1 heure après le chargment de la page (360000ms => 1 heure)
-								setTimeout(function() {
-									setInterval(updateCountTachesNonVues, 3600000); 
-								}, 0);
-						});
-					</script>
+// Lancer la requête AJAX lorsque la page est chargée
+$(document).ready(function () {
+updateCountTachesNonVues();
+// mettre à jour tous les 1 heure après le chargment de la page (360000ms => 1 heure)
+setTimeout(function () {
+setInterval(updateCountTachesNonVues, 3600000);
+}, 0);
+});
+						</script>
+					{% endif %}
 				{% endif %}
-
-			{% endif %}
+			</body>
 		</body>
 	</html>
-</body></html></body></html>

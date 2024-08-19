@@ -4,28 +4,33 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Liste des projets</h1>
+	<p class="fs-3 mb-4" style="margin-top: -30px">Liste de vos
+		<b>Projets</b>
+	</p>
 
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th>Nom du projet</th>
-				<th>Chef de projet</th>
-				<th>Porteur de projet</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for projet in projets %}
+	<div class="shadow-sm p-3">
+		<table class="table table-bordered table-striped" style="font-size: .9em">
+			<thead>
 				<tr>
-					<td>{{ projet.nom }}</td>
-					<td>{{ projet.chefprojet.username }}</td>
-					<td>{{ projet.porteur.username }}</td>
+					<th>Nom du projet</th>
+					<th>Chef de projet</th>
+					<th>Porteur de projet</th>
 				</tr>
-			{% else %}
-				<tr>
-					<td colspan="2">Aucun</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				{% for projet in projets %}
+					<tr>
+						<td>{{ projet.nom }}</td>
+						<td>{{ projet.chefprojet.username }}</td>
+						<td>{{ projet.porteur.username }}</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="2">Aucun</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
 {% endblock %}

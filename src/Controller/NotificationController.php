@@ -60,7 +60,8 @@ class NotificationController extends AbstractController
     }
 
     /**
-     * Retourne en json le nombre de taches pas encore vues
+     * Retourne en json le nombre de notifications pas encore vues
+     * Utiliser pour la requete ajax
      * @Route("/count-taches-non-vues", name="count_taches_non_vues", methods={"GET"})
      */
     public function getCountTachesNonVues()
@@ -69,39 +70,14 @@ class NotificationController extends AbstractController
         $username = $this->getUser()->getUserIdentifier();
 
         if (in_array('ROLE_MANAGER', $tabRoles)) {
-            $tachesNonVues = $this->tacheRepository->findByTachesNonVue($username);
+            $notificationsNonVues = $this->notificationRepository->findByConnectedUserAndEtat($username);
         }
 
-        $countTachesNonVues = count($tachesNonVues);
+        $countTachesNonVues = count($notificationsNonVues);
 
         return $this->json(['count' => $countTachesNonVues], 200);
     }
 
-    // /**
-    //  * @Route("/new", name="app_notification_new", methods={"GET", "POST"})
-    //  */
-    // public function new(Request $request, NotificationRepository $notificationRepository): Response
-    // {
-    //     $tabRoles = $this->getUser()->getRoles();
-    //     if (in_array('ROLE_MANAGER', $tabRoles)) {
-    //         $notification = new Notification();
-    //         $form = $this->createForm(NotificationType::class, $notification);
-    //         $form->handleRequest($request);
-
-    //         if ($form->isSubmitted() && $form->isValid()) {
-    //             $notificationRepository->add($notification, true);
-
-    //             return $this->redirectToRoute('app_notification_index', [], Response::HTTP_SEE_OTHER);
-    //         }
-
-    //         return $this->renderForm('notification/new.html.twig', [
-    //             'notification' => $notification,
-    //             'form' => $form,
-    //         ]);
-    //     } else {
-    //         return $this->render('error.html.twig');
-    //     }
-    // }
 
     /**
      * @Route("/{id}", name="app_notification_show", methods={"GET"})
@@ -142,31 +118,6 @@ class NotificationController extends AbstractController
             return $this->render('error.html.twig');
         }
     }
-
-    // /**
-    //  * @Route("/{id}/edit", name="app_notification_edit", methods={"GET", "POST"})
-    //  */
-    // public function edit(Request $request, Notification $notification, NotificationRepository $notificationRepository): Response
-    // {
-    //     $tabRoles = $this->getUser()->getRoles();
-    //     if (in_array('ROLE_MANAGER', $tabRoles)) {
-    //         $form = $this->createForm(NotificationType::class, $notification);
-    //         $form->handleRequest($request);
-
-    //         if ($form->isSubmitted() && $form->isValid()) {
-    //             $notificationRepository->add($notification, true);
-
-    //             return $this->redirectToRoute('app_notification_index', [], Response::HTTP_SEE_OTHER);
-    //         }
-
-    //         return $this->renderForm('notification/edit.html.twig', [
-    //             'notification' => $notification,
-    //             'form' => $form,
-    //         ]);
-    //     } else {
-    //         return $this->render('error.html.twig');
-    //     }
-    // }
 
     /**
      * @Route("/{id}", name="app_notification_delete", methods={"POST"})

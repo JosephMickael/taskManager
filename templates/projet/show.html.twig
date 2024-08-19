@@ -4,32 +4,40 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Projet</h1>
+	<p class="fs-3 mb-3 ms-2" style="margin-top: -30px">Afficher /
+		<b>Projet</b>
+	</p>
 
-	<table class="table table-bordered">
-		<tbody>
-			<tr>
-				<th>Id</th>
-				<td>{{ projet.id }}</td>
-			</tr>
-			<tr>
-				<th>Nom du projet</th>
-				<td>{{ projet.nom }}</td>
-			</tr>
-			<tr>
-				<th>Chef de projet</th>
-				<td>{{ projet.chefprojet.username }}</td>
-			</tr>
-			<tr>
-				<th>Porteur de projet</th>
-				<td>{{ projet.porteur.username }}</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="shadow-sm p-3">
+		<table class="table table-responsive" style="font-size: .9em">
+			<tbody>
+				<tr>
+					<th>Id</th>
+					<td>{{ projet.id }}</td>
+				</tr>
+				<tr>
+					<th>Nom du projet</th>
+					<td>{{ projet.nom }}</td>
+				</tr>
+				<tr>
+					<th>Chef de projet</th>
+					<td>{{ projet.chefprojet.username }}</td>
+				</tr>
+				<tr>
+					<th>Porteur de projet</th>
+					<td>{{ projet.porteur.username }}</td>
+				</tr>
+			</tbody>
+		</table>
 
-	<a href="{{ path('app_projet_index') }}" class="btn btn-light">Revenir à liste</a>
+		<a href="{{ path('app_projet_edit', {'id': projet.id}) }}" class="btn btn-secondary px-4 me-4" style="font-size: .9em">
+			<i class="bi bi-pencil-square position-relative" style="top: -3px; font-size: .9em"></i>
+			Modifier
+		</a>
 
-	<a href="{{ path('app_projet_edit', {'id': projet.id}) }}" class="btn btn-secondary">Modifier</a>
-
-	{# {{ include('projet/_delete_form.html.twig') }} #}
+		<a href="{{ path('app_projet_index') }}" class="me-3" style="text-decoration: none; font-size: .9em">
+			<i class="bi bi-arrow-left-circle position-relative" style="top: -2px"></i>
+			Revenir à la liste
+		</a>
+	</div>
 {% endblock %}

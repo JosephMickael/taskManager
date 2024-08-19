@@ -1,14 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Categorie
+{% block title %}Modifier Categorie
 {% endblock %}
 
 {% block body %}
-	<h1>Edit Categorie</h1>
+	<p class="fs-3 mb-4" style="margin-top: -30px">Modifier la
+		<b>Catégorie</b>
+	</p>
 
-	{{ include('categorie/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+	<div class="mb-3">
+		{{ include('categorie/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+	</div>
+	<div class="mb-3">
+		{{ include('categorie/_delete_form.html.twig') }}
+	</div>
 
-	<a href="{{ path('app_categorie_index') }}" class="btn btn-light">Revenir à la liste</a>
+	<a href="{{ path('app_categorie_index') }}" class="position-relative" style="font-size: .9em; text-decoration: none; left: 2px">
+		<i class="bi bi-arrow-left-circle position-relative" style="top: -3px"></i>
+		Revenir à la liste
+	</a>
 
-	{{ include('categorie/_delete_form.html.twig') }}
 {% endblock %}

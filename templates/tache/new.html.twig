@@ -4,9 +4,18 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Créer une nouvelle tache</h1>
+	<div class="px-3">
+		<p class="fs-3 mb-4" style="margin-top: -30px">Nouvelle
+			<b>Tache</b>
+		</p>
+	</div>
 
 	{{ include('tache/_form.html.twig') }}
 
-	<a href="{{ path('app_tache_index') }}" class="btn btn-light mb-5">revenir à la liste</a>
+	<div class="mb-4">
+		<a href="{{ path('app_tache_index') }}" class="position-relative" style="font-size: .9em; text-decoration: none; left: 10px">
+			<i class="bi bi-arrow-left-circle position-relative" style="top: -3px"></i>
+			Revenir à la liste
+		</a>
+	</div>
 {% endblock %}

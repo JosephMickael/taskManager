@@ -1,12 +1,10 @@
 {{ form_start(form) }}
-{# {{ form_widget(form) }} #}
-
-<div class="col-md-4 mb-3">
+<div class="col-md-5 mb-3">
 	{{ form_row(form.titre) }}
 </div>
-<div class="col-md-4">
+<div class="col-md-5">
 	{{ form_row(form.projet) }}
 </div>
 
-<button class="btn btn-primary mt-4 mb-4">{{ button_label|default('Enregistrer') }}</button>
+<button class="btn btn-primary px-4 mt-4 mb-4" style="font-size: .9em">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
